@@ -1,0 +1,141 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"  
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form >
+            
+             <ui:composition template="./index.xhtml">
+
+            <ui:define name="content">
+
+                <p:fieldset legend="ASIGNAR ROL"  style="background: transparent"  id="filasignarrol">
+                    
+                    <p:panelGrid columns="1" layout="grid" style="background-color: #AFAFAF">
+ 
+                                    <p:dataTable 
+                                        id="basicDT"
+                                        var="car"
+                                        paginator="true"
+                                        rows="4"
+                                        value="#{asignarRolMB.listUser}">
+                                        <f:facet name="header">
+                                            USUARIOS
+                                        </f:facet>
+                                        <p:column headerText="Codigo" filterBy="#{car.id}" filterMatchMode="contains">
+                                            <h:outputText value="#{car.id}" />
+                                        </p:column>
+                                        
+                                        <p:column headerText="Nombres">
+                                            <h:outputText value="#{car.nombre}" />
+                                        </p:column>
+                                        <p:column headerText="Apellidos">
+                                            <h:outputText value="#{car.apellidos}" />
+                                       </p:column>
+                                        <p:column style="width:32px;text-align: center">
+                                            <p:commandButton  onclick="PF('dialAsignarRol').show();" class="boton-agregar-roles" title="">
+                                                <f:setPropertyActionListener value="#{car.id}" target="#{asignarRolMB.usuarioId}" />
+                                            </p:commandButton>
+                                        </p:column>
+                                    </p:dataTable> <br></br>
+                        
+                            
+                 <!--***************************************dialogo*******************************************************-->
+                                    
+                 
+                 <p:dialog 
+                     id="diarol" 
+                     widgetVar="dialAsignarRol" 
+                     height="100%"
+                     modal="true"
+                     responsive="true"       
+                     showEffect="explode"
+                     >
+                     <p:fieldset legend="ASIGNAR ROL"  >
+
+                         <p:dataTable id="checkboxRol"
+                                      var="car"
+                                      paginator="true"
+                                      rows="8"
+                                      value="#{asignarRolMB.listRol}" 
+                                      selection="#{asignarRolMB.listRolSeleccionado}" 
+                                      rowKey="#{car.id}" 
+                                      style="margin-bottom:0">
+                             <f:facet name="header">
+                                 ROL
+                             </f:facet>
+                             <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                             <p:column headerText="Id">
+                                 <h:outputText value="#{car.id}" />
+                             </p:column>
+                             <p:column headerText="Year">
+                                 <h:outputText value="#{car.descripcion}" />
+                             </p:column>
+                             <f:facet name="footer">
+                                 <p:commandButton id="citySubmit" value="ASIGNAR"  actionListener="#{asignarRolMB.crearAsignarRol()}" style="margin-top:5px"  />
+                             </f:facet>
+                         </p:dataTable>
+                         
+                     </p:fieldset>   
+                  </p:dialog>
+                                            
+                    </p:panelGrid>
+
+                </p:fieldset>
+                
+                <!--*****************************tabla**************************************************************-->
+                
+                <p:fieldset legend="ROLES ASIGNADOS"  style="background: transparent" >
+                            
+                            <p:dataTable id="dtrxuser"
+                                         paginator="true"
+                                         rows="4"
+                                         var="car" 
+                                         value="#{asignarRolMB.listUsuarioXRols}"
+                                         editable="true"
+                                         >
+                                         
+                                <f:facet name="header">
+                                    ROLES Y USUARIOS
+                                </f:facet>
+                               
+                                <p:ajax event="rowEditCancel" listener="#{asignarRolMB.borrarRolxUsuario(car)}" update="dtrxuser" />
+                              
+                                <p:column headerText="Rol" filterBy="#{car.rolPk.descripcion}" filterMatchMode="contains">
+                                    <h:outputText value="#{car.rolPk.descripcion}" />
+                                </p:column>
+                                <p:column headerText="Codigo Usuario" filterBy="#{car.usuarioFk.id}" filterMatchMode="contains">
+                                    <h:outputText value="#{car.usuarioFk.id}" />
+                                </p:column>
+                                <p:column headerText="Nombres">
+                                    <h:outputText value="#{car.usuarioFk.nombre}" />
+                                </p:column>
+                                <p:column headerText="Apellidos">
+                                    <h:outputText value="#{car.usuarioFk.apellidos}" />
+                                </p:column>
+                                
+                                <p:column style="width:32px;text-align: center">
+                                     <p:column style="width:35px">
+                                         <p:commandButton id="citySubmit"  value="" class="boton-borrar-registro"  actionListener="#{asignarRolMB.borrarRolxUsuario(car)}"   />
+                                    </p:column>
+                                </p:column>
+                            </p:dataTable>
+                            
+                            
+                        </p:fieldset>
+
+            </ui:define>>
+
+
+        </ui:composition>
+            
+        </h:form>
+    </h:body>
+</html>
+

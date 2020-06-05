@@ -1,0 +1,168 @@
+
+.boton-menu{
+    background-image: url(../images/icono-menu5.png) !important;
+    background-repeat: no-repeat !important; 
+    background-size: 80% !important;
+    width: 80px !important;
+    height: 80px !important;
+    /*    margin: 4px 6px !important;*/
+    font-size: 10px;
+    padding: 0px !important;
+}
+
+.boton-inicio{
+    background-image: url(../images/icono-inicio.png) !important;
+    background-repeat: no-repeat !important; 
+    background-size: 100px !important;
+     width: 100px !important;
+     height: 100px !important;
+    /*    margin: 4px 6px !important;*/
+    font-size: 10px;
+    padding: 0px !important;
+}
+
+.boton-add-registro{
+    background-image: url(../images/icono-add-registro1.png) !important;
+    background-repeat: no-repeat !important; 
+    background-size: 100px !important;
+     width: 100px !important;
+     height: 100px !important;
+    /*    margin: 4px 6px !important;*/
+    font-size: 10px;
+    padding: 0px !important;
+}
+
+.boton-borrar-registro{
+    background-image: url(../images/remove_delete.png) !important;
+    background-repeat: no-repeat !important; 
+    background-size: 30px !important;
+     width: 35px !important;
+     height: 35px !important;
+    /*    margin: 4px 6px !important;*/
+    font-size: 10px;
+    padding: 0px !important;
+}
+
+.boton-agregar-roles{
+    background-image: url(../images/icono-add-rol.png) !important;
+    background-repeat: no-repeat !important; 
+    background-size: 100% !important;
+    width: 30px !important;
+    height: 30px !important;
+    /*    margin: 4px 6px !important;*/
+    font-size: 100px;
+    padding: 0px !important;
+    
+}
+
+
+.boton-agregar-proveedor{
+    background-image: url(../images/add-registro.png) !important;
+    background-repeat: no-repeat !important; 
+    background-size: 100% !important;
+    width: 100px !important;
+    height: 100px !important;
+    /*    margin: 4px 6px !important;*/
+    font-size: 100px;
+    padding: 0px !important;
+    
+}
+
+
+
+.boton-agregar-producto{
+    background-image: url(../images/add-registro.png) !important;
+    background-repeat: no-repeat !important; 
+    background-size: 100% !important;
+    width: 100px !important;
+    height: 100px !important;
+    /*    margin: 4px 6px !important;*/
+    font-size: 100px;
+    padding: 0px !important;
+}
+
+.boton-agregar-rol{
+    background-image: url(../images/add-registro.png) !important;
+    background-repeat: no-repeat !important; 
+    background-size: 100% !important;
+    width: 100px !important;
+    height: 100px !important;
+    /*    margin: 4px 6px !important;*/
+    font-size: 100px;
+    padding: 0px !important;
+}
+
+.boton-agregar-punto-venta{
+    background-image: url(../images/add-registro.png) !important;
+    background-repeat: no-repeat !important; 
+    background-size: 100% !important;
+    width: 100px !important;
+    height: 100px !important;
+    /*    margin: 4px 6px !important;*/
+    font-size: 100px;
+    padding: 0px !important;
+}
+
+.boton-agregar-promocion{
+    background-image: url(../images/add-registro.png) !important;
+    background-repeat: no-repeat !important; 
+    background-size: 100% !important;
+    width: 100px !important;
+    height: 100px !important;
+    /*    margin: 4px 6px !important;*/
+    font-size: 100px;
+    padding: 0px !important;
+}
+
+.boton-agregar-promocion{
+    background-image: url(../images/add-registro.png) !important;
+    background-repeat: no-repeat !important; 
+    background-size: 100% !important;
+     width: 100px !important;
+    height: 100px !important;
+    /*    margin: 4px 6px !important;*/
+    font-size: 100px;
+    padding: 0px !important;
+}
+
+.boton-agregar-tipo-producto{
+    background-image: url(../images/add-registro.png) !important;
+    background-repeat: no-repeat !important; 
+    background-size: 100% !important;
+    width: 100px !important;
+    height: 100px !important;
+    /*    margin: 4px 6px !important;*/
+    font-size: 100px;
+    padding: 0px !important;
+}
+
+.boton-agregar-compra{
+    background-image: url(../images/add-registro.png) !important;
+    background-repeat: no-repeat !important; 
+    background-size: 100% !important;
+    width: 100px !important;
+    height: 100px !important;
+    /*    margin: 4px 6px !important;*/
+    font-size: 100px;
+    padding: 0px !important;
+}
+
+.fondo{
+    background-image: url(../images/fondo1.png);
+    background-repeat: no-repeat !important; 
+   background-size: 150% !important;
+ 
+}
+
+.fondoFielset{
+    background-color: transparent;
+   background-size: 30% !important;  
+  
+}
+
+.fondoDiv{
+   background-image: url(../images/fondo-fielsed.jpg);
+  
+   background-size: 100% !important;
+
+}

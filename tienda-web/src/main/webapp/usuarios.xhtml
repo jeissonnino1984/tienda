@@ -1,0 +1,196 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+
+        <h:form id="formUsuarios">
+
+            <ui:composition template="./index.xhtml">
+
+                <ui:define name="content">
+
+                    <p:fieldset id="flUsuario"  legend="USUARIOS" style="margin-left: 25px; background: transparent"  >
+
+                        <p:growl id="msjEqSopor" life="6000" severity="info, error, warn" autoUpdate="false"/>
+
+                        <center>     
+                            <p:commandButton  class="boton-add-registro" value="" title="agregar"  style="background: transparent; border: 0px"  onclick="PF('dialogo1').show();" ></p:commandButton>
+                        </center> 
+
+                        <p:dataTable 
+                            id="tablaUser"
+                            paginator="true"
+                            rows="8"
+                            var="car" 
+                            value="#{usuarioMB.listUsuarios}" editable="true" style="margin-bottom:20px">
+                            <f:facet name="header">
+                                USUARIOS
+                            </f:facet>
+
+                            <p:ajax event="rowEdit"   listener="#{usuarioMB.editarUsuario(car)}" update="tablaUser" />
+                            <p:ajax event="rowEditCancel" listener="#{usuarioMB.borrarUsuario(car)}" update="tablaUser" />
+
+                            <p:column headerText="Id" style="width: 15px">
+                                <h:outputText value="#{car.id}" ></h:outputText>
+                            </p:column>
+
+
+                            <p:column headerText="Nombre" filterBy="#{car.nombre}" filterMatchMode="contains">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{car.nombre}" /></f:facet>
+                                    <f:facet name="input"><p:inputText value="#{car.nombre}" style="width:100%" label="Year"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column headerText="apellidos" filterBy="#{car.apellidos}" filterMatchMode="contains">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{car.apellidos}" /></f:facet>
+                                    <f:facet name="input"><p:inputText value="#{car.apellidos}" style="width:100%" label="Year"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column headerText="genero" style="width: 60px">
+                                <h:outputText value="#{car.genero}" ></h:outputText>
+                            </p:column>
+
+                            <p:column headerText="direccion">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{car.direccion}" /></f:facet>
+                                    <f:facet name="input"><p:inputText value="#{car.direccion}" style="width:100%" label="Year"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column headerText="telefono" style="width: 90px">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{car.telefono}" /></f:facet>
+                                    <f:facet name="input"><p:inputText value="#{car.telefono}" style="width:100%" label="Year"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            
+                            <p:column headerText="correo">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{car.correo}" /></f:facet>
+                                    <f:facet name="input"><p:inputText value="#{car.correo}" style="width:100%" label="Year"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column headerText="ciudad">
+                                <h:outputText value="#{car.ciudadResidFk.descripcion}" ></h:outputText>
+                            </p:column>
+
+                            <p:column style="width:35px">
+                                <p:rowEditor />
+                            </p:column>
+                        </p:dataTable>
+
+                        <!--*******************dialog crear usuario***********************-->
+                        <p:dialog 
+                            id="dial1" 
+                            widgetVar="dialogo1" 
+                            height="100%"
+                            modal="true"
+                            responsive="true"
+                            showEffect="explode"
+                            >
+                            <p:fieldset legend="REGISTRAR" style="margin-bottom:20px" >
+
+                                <p:panelGrid columns="2" layout="grid" style="background-color: #AFAFAF">
+
+                                    <p:outputLabel for="@next" value="Genero: " />
+                                    <p:selectOneMenu id="console1" value="#{usuarioMB.genero}" style="width:125px">
+                                        <f:selectItem itemLabel="Masculino" itemValue="M" />
+                                        <f:selectItem itemLabel="Femenino" itemValue="F" />         
+                                    </p:selectOneMenu>
+
+                                    <h:outputText value="Nombres" />
+                                    <p:inputText value="#{usuarioMB.nombres}" required="true" requiredMessage="debe escribir un nombre" /> 
+
+
+                                    <h:outputText value="Apellidos" />
+                                    <p:inputText value="#{usuarioMB.apellidos}" required="true" requiredMessage="debe escribir un apellido" />
+
+                                    <h:outputText value="correo" />
+                                    <p:inputText value="#{usuarioMB.correo}" required="true" requiredMessage="debe escribir un correo"/> 
+
+                                    <p:outputLabel  value="Departamento: " />
+                                    <p:selectOneMenu id="departametos" 
+                                                     value="#{usuarioMB.departamentoSeleccionado}" 
+                                                     required="true" 
+                                                     requiredMessage="debe selecionar una Departametno">
+                                        <f:selectItem itemLabel="Disponibles:" itemValue="#{null}"/>
+                                        
+                                        <f:selectItems value="#{usuarioMB.listLugaresDEP}" 
+                                                       var="pro1" 
+                                                       itemLabel="#{pro1.descripcion}" 
+                                                       itemValue="#{pro1.codigo}" />
+                                        <p:ajax listener="#{usuarioMB.listarCiudad()}" update="idCiuddades, msjEqSopor" />
+                                    </p:selectOneMenu>
+
+
+                                    <p:outputLabel  value="Ciudad: " />
+                                    <p:selectOneMenu id="idCiuddades" 
+                                                     value="#{usuarioMB.ciudadId}" 
+                                                     disabled="#{usuarioMB.listCiudades == null}" 
+                                                     required="true" 
+                                                     requiredMessage="debe selecionar una Departametno">
+                                        <f:selectItem itemLabel="Disponibles:" itemValue="#{null}"/>
+                                        <f:selectItems value="#{usuarioMB.listCiudades}"
+                                                       var="ciudad" 
+                                                       itemLabel="#{ciudad.descripcion}" 
+                                                       itemValue="#{ciudad.codigo}" />
+                                    </p:selectOneMenu>
+
+
+
+                                    <h:outputText value="direccion" />
+                                    <p:inputText value="#{usuarioMB.direccion}" />
+
+
+                                    <h:outputText value="telefono" />
+                                    <p:inputNumber value="#{usuarioMB.telefono}" decimalPlaces=""  /> 
+
+                                    <p:outputLabel for="console" value="Jefe de punto de venta:" />
+                                    <p:selectOneRadio id="console" value="#{usuarioMB.jefePunto}" >
+                                        <f:selectItem itemLabel="Si" itemValue="1" />
+                                        <f:selectItem itemLabel="No" itemValue="0" />
+                                    </p:selectOneRadio>
+
+                                    <p:commandButton  
+                                        actionListener="#{usuarioMB.crearUsuario()}"
+                                        value="GUARDAR"  
+                                        style="margin-right:20px;"
+                                        update="msjEqSopor"
+                                        >
+                                    </p:commandButton> 
+                                    
+                                   
+
+                                </p:panelGrid>
+
+                            </p:fieldset>          
+
+                        </p:dialog>
+
+                    </p:fieldset>
+
+
+                </ui:define>>
+
+            </ui:composition>
+
+
+        </h:form>
+
+
+
+
+    </h:body>
+</html>
+

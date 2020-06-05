@@ -1,0 +1,134 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Tipo Producto</title>
+    </h:head>
+    <h:body>
+
+
+        <ui:composition template="./index.xhtml">
+
+            <ui:define name="content" >
+
+                <p:fieldset legend="TIPO PRODUCTO"   class="fondoFielset" style="margin-bottom:20px; background: transparent">
+
+
+                    <h:form id="formTipo">
+                        <p:growl id="msgs" showDetail="true"/> 
+
+                        <div >
+
+                            <center>     
+                                <p:commandButton   class="boton-add-registro" value="" title="agregar"  style="background: transparent; border: 0px"  onclick="PF('crearTipo').show();" ></p:commandButton>
+                            </center>  
+
+                        </div> <br></br>
+
+
+
+                        <p:dataTable 
+                            id="tablaTipo"
+                            paginator="true"
+                            rows="8"
+                            var="car" 
+                            value="#{tipoProductoMB.listTipoProducto}" 
+                            editable="true" style="margin-bottom:20px"
+
+                            >
+
+                            <f:facet name="header">
+                                TIPO
+                            </f:facet>
+
+                            <p:ajax event="rowEdit" listener="#{tipoProductoMB.editarTipoSoporte(car)}" update="tablaTipo" />
+                            <p:ajax event="rowEditCancel" listener="#{tipoProductoMB.eliminarTipoSoporte(car)}" update="tablaTipo" />
+
+                            <p:column headerText="Codigo" style="width: 100px; height: 20px">
+                                <h:outputText value="#{car.id}" ></h:outputText>
+                            </p:column>
+
+                            <p:column headerText="Estado" style="width: 100px; height: 20px">
+                               
+                                <p:cellEditor>
+                                    <f:facet name="output"  ><h:outputText value="#{(car.estado==1)?'Activo ':'Inactivo '}"></h:outputText>                             
+                                    <h:graphicImage style="width: 20px;height: 20px" id="candadoDesbloqueado" value="/resources/images/icon-activo.png"  rendered="#{car.estado==1}"/>
+                                    <h:graphicImage style="width: 20px;height: 20px" id="candadoBloqueado" value="/resources/images/icon-desactivo.png" rendered="#{car.estado==0}"/>
+                                    </f:facet>
+                                   
+                                    <f:facet name="input">                                       
+                                        <h:selectOneMenu value="#{car.estado}" style="width:100%">
+                                            <f:selectItem itemLabel="Activo" itemValue="1" />
+                                            <f:selectItem itemLabel="Inactivo" itemValue="0" />
+                                        </h:selectOneMenu>
+                                    </f:facet>
+                                </p:cellEditor>
+                                
+                            </p:column>
+
+
+                            <!--******FILTRO*****-->                              
+                            <p:column    
+                                headerText="Tipo de producto"
+                                filterBy="#{car.tipo}"  
+                                filterMatchMode="contains" 
+                                style="width: 700px"
+                                >
+                                <p:cellEditor>
+                                    <f:facet name="output"> <h:outputText value="#{car.tipo}" /></f:facet>
+                                    <f:facet name="input"> <p:inputText value="#{car.tipo}" style="width:100%" label="Year"/></f:facet>
+                                </p:cellEditor>
+
+                            </p:column>
+
+                            <p:column style="width:35px">
+                                <p:rowEditor />
+                            </p:column>         
+                        </p:dataTable>
+
+                        <!--*************************************dialogo crear******************************************-->
+
+
+                        <p:dialog 
+                            id="dialCrearTipo"
+                            widgetVar="crearTipo" 
+                            height="10%"
+                            modal="true"
+                            responsive="true"
+                            showEffect="explode"
+                            >
+
+                            <p:fieldset id="flUsuario"    legend="NUEVO TIPO"  >
+                                <p:growl id="msjEqSopor" life="6000" severity="info, error, warn" autoUpdate="false"/>
+
+                                <p:outputLabel value="Tipo:  " />
+                                <p:inputText id="imptipo"  value="#{tipoProductoMB.producto}" required="true" requiredMessage="No puede ser nulo" style="margin: 20px" /> 
+
+                                <p:commandButton   
+
+                                    actionListener="#{tipoProductoMB.createTipoProducto()}"
+                                    value="GUARDAR"  
+                                    icon="pi pi-star" 
+                                    style="margin-right:20px;"
+                                    update="dialCrearTipo, msjEqSopor">
+                                </p:commandButton>  
+
+                            </p:fieldset>
+
+                        </p:dialog>
+
+                    </h:form>
+
+                </p:fieldset>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </h:body>
+</html>
+

@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        
+           <ui:composition template="./index.xhtml">
+
+               <ui:define name="content">
+                   
+                   <p:fieldset legend="ASIGNAR PROMOCIONES" style="background: transparent" class="fondoFielset" >
+                       
+                       <p:dataTable 
+                        id="dtb"
+                        var="car"
+                        paginator="true"
+                        rows="4"
+                        value="#{asignarPromocionMB.listPromociones}">
+                        <f:facet name="header">
+                            PROMOCIONES
+                        </f:facet>
+                        <p:column headerText="Codigo" filterBy="#{car.id}" filterMatchMode="contains">
+                            <h:outputText value="#{car.id}" />
+                        </p:column>
+
+                        <p:column headerText="Promocion">
+                            <h:outputText value="#{car.nombre}" />
+                        </p:column>
+                        
+                        <p:column headerText="Descuento %">
+                            <h:outputText value="#{car.porcentajeDes}" />
+                        </p:column>
+                        
+                         <p:column headerText="Fecha Inicio">
+                             <h:outputText value="#{car.fechaInicio}" > <f:convertDateTime pattern="dd/MM/yyyy"/></h:outputText>
+                        </p:column>
+                        
+                         <p:column headerText="Fecha Termina">
+                             <h:outputText value="#{car.fechaTermina}" > <f:convertDateTime pattern="dd/MM/yyyy"/> </h:outputText>
+                        </p:column>
+                        
+                        
+                        <p:column style="width:32px;text-align: center">
+                            <p:commandButton  onclick="PF('dialAsignaPromo').show();" class="boton-agregar-roles" title="">
+                                <f:setPropertyActionListener value="#{car.id}" target="#{asignarPromocionMB.promocionId}" />
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable> <br></br>
+                    
+                    <!--***************************dialog*****************************************-->
+                    
+                       <p:dialog 
+                     id="diaProm" 
+                     widgetVar="dialAsignaPromo" 
+                     height="100%"
+                     modal="true"
+                     responsive="true"       
+                     showEffect="explode"
+                     >
+                           
+                        <p:growl id="msjEqSopor" life="6000" severity="info, error, warn" autoUpdate="false"/>  
+                        
+                     <p:fieldset legend="ASIGNAR PROMOCION"  >
+
+                       
+                         <p:dataTable id="checkboxRol"
+                                      var="car1"
+                                      paginator="true"
+                                      rows="8"
+                                      value="#{asignarPromocionMB.listProducto}" 
+                                      selection="#{asignarPromocionMB.listProductoSeleccionado}" 
+                                      rowKey="#{car1.id}" 
+                                      style="margin-bottom:0">
+                             <f:facet name="header">
+                                 PRODUCTOS
+                             </f:facet>
+                             <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                             <p:column headerText="Id" style="width: 30px">
+                                 <h:outputText value="#{car1.id}" />
+                             </p:column>
+                             
+                             <p:column headerText="Producto" >
+                                 <h:outputText value="#{car1.nombre}" />
+                             </p:column>
+                             
+                             <p:column headerText="Referencia">
+                                 <h:outputText value="#{car1.skuFk.referencia}" />
+                             </p:column>
+                             
+                            
+                         </p:dataTable>
+                         
+                         <center>
+                               <p:commandButton   value="ASIGNAR" actionListener="#{asignarPromocionMB.asignarPromocionProducto()}"  style="margin-top:5px" update="msjEqSopor"  />
+                         </center>
+                       
+                         
+                     </p:fieldset>   
+                  </p:dialog>
+                    
+               
+                       
+                   </p:fieldset>
+                   
+                 
+                   
+               </ui:define>
+
+                   
+          
+
+
+        </ui:composition>
+
+      
+    </h:body>
+</html>
+

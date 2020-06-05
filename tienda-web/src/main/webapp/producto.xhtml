@@ -1,0 +1,215 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h1>PRODUCTOS</h1>
+
+        <script type="text/javascript">
+              PrimeFaces.locales['es'] = {
+                  closeText: 'Cerrar',
+                  prevText: 'Anterior',
+                  nextText: 'Siguiente',
+                  monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                  monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                  dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                dayNamesMin: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
+                weekHeader: 'Semana',
+                firstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: '',
+                timeOnlyTitle: 'Sólo hora',
+                timeText: 'Tiempo',
+                hourText: 'Hora',
+                minuteText: 'Minuto',
+                secondText: 'Segundo',
+                currentText: 'Fecha actual',
+                ampm: false,
+                month: 'Mes',
+                week: 'Semana',
+                day: 'Día',
+                allDayText: 'Todo el día'
+            };
+        </script>
+
+        <ui:composition template="./index.xhtml">
+
+            <ui:define name="content">
+
+                <p:fieldset legend="PRODUCTOS" style="background: transparent; border: 0px" class="fondoFielset" >
+
+                    <h:form id="form1">
+                        <p:growl id="msjEqSopor" life="6000" severity="info, error, warn" autoUpdate="false"/>
+
+                        <center>     
+                            <p:commandButton  class="boton-add-registro" style="background: transparent" value="" title="agregar" onclick="PF('dialCrearProducto').show();" ></p:commandButton>
+                        </center> 
+
+                        <p:dataTable id="tablaProducto" 
+                                     paginator="true"
+                                     rows="8"
+                                     var="car" 
+                                     value="#{productosMB.listProducto}" 
+                                     editable="true"
+                                     style="margin-bottom:20px">
+                            <f:facet name="header">
+                                PRODUCTOS
+                            </f:facet>
+
+                            <p:ajax event="rowEdit"   listener="#{productosMB.editarProducto(car)}" update="tablaProducto" />
+                            <p:ajax event="rowEditCancel" listener="#{productosMB.borrarProducto(car)}" update="tablaProducto" />
+
+
+                            <p:column headerText="Id">
+                                <h:outputText value="#{car.id}" ></h:outputText>
+                            </p:column>
+                            
+                            
+                            <p:column headerText="Proveedor"  filterBy="#{car.proveedorId.nombre}" filterMatchMode="contains">
+                                <h:outputText value="#{car.proveedorId.nombre}" ></h:outputText>
+                            </p:column>
+                            
+                            <p:column headerText="Num factura ingreso">
+                                <h:outputText value="#{car.numFacturaProveedor}" ></h:outputText>
+                            </p:column>
+                            
+                            <p:column headerText="Tipo"  filterBy="#{car.tipoProductoId.tipo}" filterMatchMode="contains">
+                                 <h:outputText value="#{car.tipoProductoId.tipo}" ></h:outputText>
+                            </p:column>
+                            
+                            <p:column headerText="Referencia"  filterBy="#{car.skuFk.referencia}" filterMatchMode="contains">
+                                <h:outputText value="#{car.skuFk.referencia}" ></h:outputText>
+                            </p:column>
+
+                            <p:column headerText="Nombre"  filterBy="#{car.nombre}" filterMatchMode="contains">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{car.nombre}" /></f:facet>
+                                    <f:facet name="input"><p:inputText value="#{car.nombre}" style="width:100%" label="Year"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            
+                             <p:column headerText="Descripcion"  >
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{car.observacion}" /></f:facet>
+                                    <f:facet name="input"><p:inputText value="#{car.observacion}" style="width:100%" label="Year"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+
+                            <p:column headerText="Fecha ingreso">
+                                <h:outputText value="#{car.fechaIngresa}" ><f:convertDateTime pattern="dd/MM/yyyy"/></h:outputText>
+                            </p:column>
+
+                            <p:column headerText="Fecha vence">
+                                <h:outputText value="#{car.fechaVence}" ><f:convertDateTime pattern="dd/MM/yyyy"/></h:outputText>
+                            </p:column>
+
+
+                            <p:column headerText="Unidades">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{car.unidadesDisponibles}" /></f:facet>
+                                    <f:facet name="input"><p:inputText value="#{car.unidadesDisponibles}" style="width:100%" label="Year"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                           
+
+
+                            <p:column headerText="Valor unitario">
+                                <h:outputText value="#{car.valorUnitario}" ></h:outputText>
+                            </p:column>
+
+
+
+                            <p:column style="width:35px">
+                                <p:rowEditor />
+                            </p:column>
+                        </p:dataTable>
+                        
+                        <!--****************dialog crear*********************-->
+                        <p:dialog id="dialCrearProducto"
+                                  widgetVar="dialCrearProducto" 
+                                  height="10%"
+                                  modal="true"
+                                  responsive="true"
+                                   showEffect="explode"
+                                  >
+
+                            <p:fieldset legend="PRODUCTOS" style="margin-bottom:20px" >
+
+                                <p:panelGrid columns="2" layout="grid" style="background-color: #AFAFAF">
+
+                                    <h:outputText value="Tipo Producto:" />
+                                    <p:selectOneMenu id="tiposPorducto" value="#{productosMB.tipoProductoId}" required="true" requiredMessage="debe selecionar un tipo">
+                                        <f:selectItem itemLabel="Disponibles:" itemValue="#{null}"/>
+                                        <f:selectItems value="#{productosMB.listTipoProducto}" var="pro" itemLabel="#{pro.tipo}" itemValue="#{pro.id}" />
+                                    </p:selectOneMenu> 
+
+
+                                    <h:outputText value="Proveedor" />
+                                    <p:selectOneMenu id="tiposProveedor" value="#{productosMB.proveedorId}" required="true" requiredMessage="debe selecionar un proveedor">
+                                        <f:selectItem itemLabel="Disponibles:" itemValue="#{null}"/>
+                                        <f:selectItems value="#{productosMB.listProveedor}" var="pro1" itemLabel="#{pro1.nombre}" itemValue="#{pro1.id}" />
+                                    </p:selectOneMenu>  
+                                    
+                                     <h:outputText value="Referencia" />
+                                     <p:selectOneMenu id="tiposReferencia" value="#{productosMB.skuId}" required="true" requiredMessage="debe selecionar un proveedor">
+                                        <f:selectItem itemLabel="Disponibles:" itemValue="#{null}"/>
+                                        <f:selectItems value="#{productosMB.listSku}" var="pro1" itemLabel="#{pro1.referencia}" itemValue="#{pro1.id}" />
+                                     </p:selectOneMenu>  
+
+                                     <h:outputText value="Numero factura ingreso" />
+                                     <p:inputText value="#{productosMB.numFactura}" /> 
+
+                                     <h:outputText value="Nombe Producto" />
+                                     <p:inputText value="#{productosMB.nombre}" /> 
+                                     
+
+                                     <h:outputText value="Descripciòn Resumen del poducto" />
+                                     <p:inputTextarea value="#{productosMB.observacion}" /> 
+
+                                    <h:outputText value="Valor bruto" />
+                                    <p:inputNumber  value="#{productosMB.valorComprado}" decimalPlaces="0"></p:inputNumber>
+
+                                    <h:outputText value="Porcentaje Ganancia (%)" />
+                                    <p:inputNumber  value="#{productosMB.valorGanancia}" decimalPlaces="0"></p:inputNumber>
+
+                                    <h:outputText value="Unidades ingrean a bodega" />
+                                    <p:inputNumber  value="#{productosMB.unidadesDisponibles}"  decimalPlaces="0"></p:inputNumber> 
+
+                                    <h:outputText value="Fecha vence producto" />
+                                    <p:calendar id="button" value="#{productosMB.fechaIvence}" locale="es" pattern="dd/MM/yyyy" showOn="button" />
+
+                                    <p:commandButton  
+                                        action="#{productosMB.crearProducto()}" 
+                                        value="GUARDAR"  
+                                        icon="pi pi-star" 
+                                        style="margin-right:20px;"
+                                        update="msjEqSopor, tablaProducto">
+                                    </p:commandButton> <br></br> <br></br>  <br></br>  
+
+                                </p:panelGrid>
+
+                            </p:fieldset>
+
+                        </p:dialog>
+
+                    </h:form>
+
+                </p:fieldset>
+
+            </ui:define>>
+
+        </ui:composition>
+
+    </h:body>
+</html>
+

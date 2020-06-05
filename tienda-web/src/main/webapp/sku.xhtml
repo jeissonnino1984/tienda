@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+         <ui:composition template="./index.xhtml">
+
+            <ui:define name="content">
+
+                <p:fieldset legend="CODIGO UNICO PRODUCTO" style="margin-bottom:20px; background: transparent"  >
+                    
+                    
+                      <center>     
+                            <p:commandButton  class="boton-add-registro" value="" title="agregar"  style="background: transparent; border: 0px"  onclick="PF('dialCreaSku').show();" ></p:commandButton>
+                        </center> 
+                    
+                    <h:form id="formSku">
+
+                        <p:dataTable id="tablaSku"
+                                     var="car"
+                                     value="#{skuMB.listSku}"
+                                     editable="true"
+                                     style="margin-bottom:20px"
+                                     paginator="true"
+                                     rows="8"
+                                     >
+                            <f:facet name="header">
+                                REFERENCIAS PRODUCTOS
+                            </f:facet>
+
+                            <p:ajax event="rowEdit" listener="#{skuMB.editarSku(car)}" update="tablaSku" />
+                            <p:ajax event="rowEditCancel" listener="#{skuMB.borrarSku(car)}" update="tablaSku" />
+
+                          
+                            
+                            <p:column headerText="Id" style="width: 50px">
+                                <h:outputText value="#{car.id}" ></h:outputText>
+                            </p:column>
+                            
+                            <p:column headerText="Codigo Referencia" style="width: 150px" filterBy="#{car.referencia}" filterMatchMode="contains">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{car.referencia}" /></f:facet>
+                                    <f:facet name="input"><p:inputText  value="#{car.referencia}" style="width:100%"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            
+                            <p:column headerText="Descripcion Referencia" >
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{car.descripcionReferencia}" /></f:facet>
+                                    <f:facet name="input"><p:inputText  value="#{car.descripcionReferencia}" style="width:100%"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column headerText="Estado" style="width: 100px">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{car.estado}" /></f:facet>
+                                    <f:facet name="input"><p:inputText  value="#{car.estado}" style="width:100%"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                           
+
+                            <p:column style="width:35px">
+                                <p:rowEditor />
+                            </p:column>
+                        </p:dataTable>
+
+                        <!--*********************dialog******************************-->
+                        
+                          <p:dialog id="dialSku"
+                                  widgetVar="dialCreaSku" 
+                                  height="10%"
+                                  modal="true"
+                                  responsive="true"
+                                  showEffect="explode">
+                                      
+                              <p:fieldset legend="REFERENCIAS" style="margin-bottom:20px" >
+                                  
+                                  
+                                  <p:panelGrid columns="2" layout="grid" style="background-color: #AFAFAF">
+                                      
+                                     <h:outputText value="Codigo referencia" />
+                                   <p:inputText value="#{skuMB.referencia}" /> 
+                                   
+                                    <h:outputText value="Descripcion de referencia" />
+                                    <p:inputTextarea value="#{skuMB.descripcion}" />
+                                    
+                                    <p:column></p:column>
+
+                                    <p:commandButton   
+                                        action="#{skuMB.crearSku()}"
+                                        value="GUARDAR"  
+                                        icon="pi pi-star" 
+                                        style="margin-right:20px;" 
+
+                                        >
+                                    </p:commandButton>
+                                  </p:panelGrid>
+                                  
+                                   
+                                   
+                                   
+
+                              </p:fieldset>
+                              
+                              
+                          </p:dialog>
+
+
+                        
+
+
+                    </h:form>
+                    
+                </p:fieldset>
+
+            </ui:define>>
+
+
+        </ui:composition>
+
+    </h:body>
+</html>
+
