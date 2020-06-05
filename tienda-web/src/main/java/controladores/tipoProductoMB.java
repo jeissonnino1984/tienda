@@ -78,7 +78,7 @@ public class tipoProductoMB implements Serializable{
     }
  
    
-    
+    /******hola********/
 //public void convertirBoleanAnumber() {
 //
 //        if (estadobool = true) {
