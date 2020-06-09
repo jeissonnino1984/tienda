@@ -85,15 +85,15 @@
                 
                  <p:column headerText="Fecha inicio">
                     <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{car.fechaInicio}" > <f:convertDateTime pattern="dd/MM/yyyy"/> </h:outputText></f:facet>
-                        <f:facet name="input"><p:inputText value="#{car.fechaInicio}" style="width:100%" label="Year" > </p:inputText></f:facet>
+                        <f:facet name="output"><h:outputText value="#{car.fechaInicio}" > <f:convertDateTime pattern="dd/MM/yyyy"/><f:convertDateTime pattern="dd/MM/yyyy"/> </h:outputText></f:facet>
+                        <f:facet name="input"><p:inputText value="#{car.fechaInicio}" style="width:100%" label="Year" > <f:convertDateTime pattern="dd/MM/yyyy"/> </p:inputText></f:facet>
                     </p:cellEditor>
                 </p:column>
                 
                  <p:column headerText="Fecha fin">
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{car.fechaTermina}" > <f:convertDateTime pattern="dd/MM/yyyy"/>  </h:outputText> </f:facet>
-                       <f:facet name="input"><p:inputText value="#{car.fechaTermina}" style="width:100%" label="Year" /></f:facet>
+                        <f:facet name="input"><p:inputText value="#{car.fechaTermina}" style="width:100%" label="Year" > <f:convertDateTime pattern="dd/MM/yyyy"/> </p:inputText> </f:facet>
                        
                     </p:cellEditor>
                 </p:column>
@@ -103,6 +103,22 @@
                         <f:facet name="output"><h:outputText value="#{car.porcentajeDes}" /></f:facet>
                         <f:facet name="input"><p:inputText value="#{car.porcentajeDes}" style="width:100%" label="Year"/></f:facet>
                     </p:cellEditor>
+                </p:column >
+
+                <p:column headerText="Estado">
+                    <p:cellEditor>
+                        <f:facet name="output"  ><h:outputText value="#{(car.estado==1)?'Activo ':'Inactivo '}"></h:outputText>                             
+                            <h:graphicImage style="width: 20px;height: 20px" id="candadoDesbloqueado" value="/resources/images/icon-activo.png"  rendered="#{car.estado==1}"/>
+                            <h:graphicImage style="width: 20px;height: 20px" id="candadoBloqueado" value="/resources/images/icon-desactivo.png" rendered="#{car.estado==0}"/>
+                        </f:facet>
+
+                        <f:facet name="input">                                       
+                            <h:selectOneMenu value="#{car.estado}" style="width:100%">
+                                <f:selectItem itemLabel="Activo" itemValue="1" />
+                                <f:selectItem itemLabel="Inactivo" itemValue="0" />
+                            </h:selectOneMenu>
+                        </f:facet>
+                    </p:cellEditor>
                 </p:column>
                 
                 <p:column style="width:35px">
@@ -110,7 +126,7 @@
                 </p:column>
             </p:dataTable>
                          
-   /*****************************************dielog****************************************************************/
+   /*****************************************dialog****************************************************************/
    <p:dialog id="dilpromociones"
              widgetVar="dialCrearProducto" 
              height="10%"

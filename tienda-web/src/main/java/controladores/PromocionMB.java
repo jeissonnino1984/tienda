@@ -70,8 +70,7 @@ private List<Promociones> listPromociones;
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY");
                 return date;
 	}
-     
-      
+   
      /**********************************************************************************************************/
      
 

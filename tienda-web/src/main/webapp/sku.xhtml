@@ -59,8 +59,17 @@
 
                             <p:column headerText="Estado" style="width: 100px">
                                 <p:cellEditor>
-                                    <f:facet name="output"><h:outputText value="#{car.estado}" /></f:facet>
-                                    <f:facet name="input"><p:inputText  value="#{car.estado}" style="width:100%"/></f:facet>
+                                    <f:facet name="output"  ><h:outputText value="#{(car.estado==1)?'Activo ':'Inactivo '}"></h:outputText>                             
+                                    <h:graphicImage style="width: 20px;height: 20px" id="candadoDesbloqueado" value="/resources/images/icon-activo.png"  rendered="#{car.estado==1}"/>
+                                    <h:graphicImage style="width: 20px;height: 20px" id="candadoBloqueado" value="/resources/images/icon-desactivo.png" rendered="#{car.estado==0}"/>
+                                    </f:facet>
+                                   
+                                    <f:facet name="input">                                       
+                                        <h:selectOneMenu value="#{car.estado}" style="width:100%">
+                                            <f:selectItem itemLabel="Activo" itemValue="1" />
+                                            <f:selectItem itemLabel="Inactivo" itemValue="0" />
+                                        </h:selectOneMenu>
+                                    </f:facet>
                                 </p:cellEditor>
                             </p:column>
                            

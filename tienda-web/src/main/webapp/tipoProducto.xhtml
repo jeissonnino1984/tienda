@@ -52,7 +52,25 @@
                                 <h:outputText value="#{car.id}" ></h:outputText>
                             </p:column>
 
-                            <p:column headerText="Estado" style="width: 100px; height: 20px">
+                          
+
+
+                            <!--******FILTRO*****-->                              
+                            <p:column    
+                                headerText="Tipo de producto"
+                                filterBy="#{car.tipo}"  
+                                filterMatchMode="contains" 
+                                style="width: 700px"
+                                >
+                                <p:cellEditor>
+                                    <f:facet name="output"> <h:outputText value="#{car.tipo}" /></f:facet>
+                                    <f:facet name="input"> <p:inputText value="#{car.tipo}" style="width:100%" label="Year"/></f:facet>
+                                </p:cellEditor>
+
+                            </p:column>
+                            
+                            
+                              <p:column headerText="Estado" style="width: 100px; height: 20px">
                                
                                 <p:cellEditor>
                                     <f:facet name="output"  ><h:outputText value="#{(car.estado==1)?'Activo ':'Inactivo '}"></h:outputText>                             
@@ -68,21 +86,6 @@
                                     </f:facet>
                                 </p:cellEditor>
                                 
-                            </p:column>
-
-
-                            <!--******FILTRO*****-->                              
-                            <p:column    
-                                headerText="Tipo de producto"
-                                filterBy="#{car.tipo}"  
-                                filterMatchMode="contains" 
-                                style="width: 700px"
-                                >
-                                <p:cellEditor>
-                                    <f:facet name="output"> <h:outputText value="#{car.tipo}" /></f:facet>
-                                    <f:facet name="input"> <p:inputText value="#{car.tipo}" style="width:100%" label="Year"/></f:facet>
-                                </p:cellEditor>
-
                             </p:column>
 
                             <p:column style="width:35px">
