@@ -1,6 +1,7 @@
 
 package controladores;
 
+import com.mycompany.ejb.ParametroEJB;
 import com.mycompany.ejb.ProductoEJB;
 import com.mycompany.ejb.PromocionesEJB;
 import com.mycompany.ejb.ProveedorEJB;
@@ -33,6 +34,8 @@ public class ProductosMB implements Serializable{
     ProveedorEJB proveedorEJB;
     @EJB
     SkuEJB skuEJB;
+    @EJB
+    ParametroEJB parametroEJB;
     
     private int id;
     private String nombre;
@@ -49,6 +52,8 @@ public class ProductosMB implements Serializable{
    
     private String fechaIngreso;
     private Date fechaIvence;
+    
+    private String rutaImagenesProducto;
 
     Producto producto;
     Promociones promociones;
@@ -72,7 +77,7 @@ public class ProductosMB implements Serializable{
         listProveedor = proveedorEJB.findAll();
         listProducto = productoEJB.findAll();
         listSku = skuEJB.findAll();
-       
+        rutaImagenesProducto = parametroEJB.rutaImagenProducto().getValor();
     }
 
     public void crearProducto() {
@@ -267,6 +272,14 @@ public class ProductosMB implements Serializable{
 
     public void setObservacion(String observacion) {
         this.observacion = observacion;
+    }
+
+    public String getRutaImagenesProducto() {
+        return rutaImagenesProducto;
+    }
+
+    public void setRutaImagenesProducto(String rutaImagenesProducto) {
+        this.rutaImagenesProducto = rutaImagenesProducto;
     }
     
     

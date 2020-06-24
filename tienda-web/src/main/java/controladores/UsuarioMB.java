@@ -67,6 +67,13 @@ public class UsuarioMB implements Serializable{
     private List<PuntoVenta> ListPuntoVenta;
     private Lugares ciudadLocal;
     
+    
+   
+
+    public UsuarioMB() {
+        
+    }
+    
     @PostConstruct
     public void inicializar() {
         ListLugaresDEP = lugaresEJB.ListarDepartametos();
@@ -75,15 +82,6 @@ public class UsuarioMB implements Serializable{
            
     }
     
-    public void mostrar () {
-    
-        System.out.println("lista deaptamentos" + ListLugaresDEP);
-    }
-   
-
-    public UsuarioMB() {
-        
-    }
     
     public void crearClienteAsignaRol(){
         
