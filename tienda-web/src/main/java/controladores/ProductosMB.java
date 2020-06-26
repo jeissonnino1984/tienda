@@ -12,14 +12,24 @@ import com.mycompany.entidades.Promociones;
 import com.mycompany.entidades.Proveedor;
 import com.mycompany.entidades.Sku;
 import com.mycompany.entidades.TipoProducto;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
+import utilitarios.Mensajes;
 
 
 @Named(value = "productosMB")
@@ -54,6 +64,8 @@ public class ProductosMB implements Serializable{
     private Date fechaIvence;
     
     private String rutaImagenesProducto;
+    private UploadedFile uploadedFile;
+    
 
     Producto producto;
     Promociones promociones;
@@ -68,7 +80,7 @@ public class ProductosMB implements Serializable{
     private List<Sku> listSku;
     
     public ProductosMB() {
-        
+    
     }
     
     @PostConstruct
@@ -77,7 +89,9 @@ public class ProductosMB implements Serializable{
         listProveedor = proveedorEJB.findAll();
         listProducto = productoEJB.findAll();
         listSku = skuEJB.findAll();
+        /*************la ruta esta en base de datos*************/
         rutaImagenesProducto = parametroEJB.rutaImagenProducto().getValor();
+        uploadedFile = null;
     }
 
     public void crearProducto() {
@@ -96,7 +110,9 @@ public class ProductosMB implements Serializable{
         producto.setNumFacturaProveedor(numFactura);
         producto.setObservacion(observacion);
         productoEJB.create(producto);
+        Mensajes.mensajeINFO("Se registra con exito el producto");
         System.out.println("se guardo registro");
+        System.out.println("ruta imagen" + rutaImagenesProducto);
 
     }
 
@@ -127,6 +143,28 @@ public class ProductosMB implements Serializable{
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY");
         System.out.println(dateFormat.format(date));
     }
+    
+    
+    /***************************metodos cargar imagen************************/
+    public void handleFileUpload(FileUploadEvent event) {
+        
+        uploadedFile = event.getFile();
+        String filename = uploadedFile.getFileName();
+        long bytes = uploadedFile.getSize();
+
+        try {
+            OutputStream out = new FileOutputStream(new File(rutaImagenesProducto + filename));
+            out.flush();
+            out.close();
+            Mensajes.mensajeINFO("Se crea el archivo " + filename + "  Peso " + bytes + "Kbps");
+
+        } catch (Exception e) {
+            System.out.println("error " + e.getStackTrace());
+        }
+    }
+ 
+   
+    /**************************************************************************************/
 
     public int getId() {
         return id;
@@ -274,14 +312,14 @@ public class ProductosMB implements Serializable{
         this.observacion = observacion;
     }
 
-    public String getRutaImagenesProducto() {
-        return rutaImagenesProducto;
+    public UploadedFile getUploadedFile() {
+        return uploadedFile;
     }
 
-    public void setRutaImagenesProducto(String rutaImagenesProducto) {
-        this.rutaImagenesProducto = rutaImagenesProducto;
+    public void setUploadedFile(UploadedFile uploadedFile) {
+        this.uploadedFile = uploadedFile;
     }
-    
-    
+
+  
     
 }

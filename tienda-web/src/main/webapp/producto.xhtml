@@ -44,10 +44,10 @@
 
             <ui:define name="content">
 
-                <p:fieldset legend="PRODUCTOS" style="background: transparent; border: 0px" class="fondoFielset" >
+                <p:fieldset legend="PRODUCTOS" style="background: transparent" class="fondoFielset" >
 
                     <h:form id="form1">
-                        <p:growl id="msjEqSopor" life="6000" severity="info, error, warn" autoUpdate="false"/>
+                        <p:growl id="msjEqSopor" life="6000" severity="info, error, warn" autoUpdate="false" />
 
                         <center>     
                             <p:commandButton  class="boton-add-registro" style="background: transparent" value="" title="agregar" onclick="PF('dialCrearProducto').show();" ></p:commandButton>
@@ -120,22 +120,23 @@
                                 </p:cellEditor>
                             </p:column>
 
-                           
-
-
                             <p:column headerText="Valor unitario">
                                 <h:outputText value="#{car.valorUnitario}" ></h:outputText>
                             </p:column>
-
-
+                            
+                            <p:column headerText="Imagen">
+                                <p:commandButton  onclick="PF('dialImgProducto').show();" class="boton-agregar-roles" title="">
+                                    <f:setPropertyActionListener value="#{car.id}" target="#{productosMB.id}" />
+                                </p:commandButton>
+                            </p:column>
 
                             <p:column style="width:35px">
                                 <p:rowEditor />
                             </p:column>
                         </p:dataTable>
                         
-                        <!--****************dialog crear*********************-->
-                        <p:dialog id="dialCrearProducto"
+ <!--*********************************************dialog crear********************************************************-->
+ <p:dialog id="dialCrearProducto"
                                   widgetVar="dialCrearProducto" 
                                   height="10%"
                                   modal="true"
@@ -164,7 +165,9 @@
                                      <p:selectOneMenu id="tiposReferencia" value="#{productosMB.skuId}" required="true" requiredMessage="debe selecionar un proveedor">
                                         <f:selectItem itemLabel="Disponibles:" itemValue="#{null}"/>
                                         <f:selectItems value="#{productosMB.listSku}" var="pro1" itemLabel="#{pro1.referencia}" itemValue="#{pro1.id}" />
-                                     </p:selectOneMenu>  
+                                     </p:selectOneMenu> 
+
+                                  
 
                                      <h:outputText value="Numero factura ingreso" />
                                      <p:inputText value="#{productosMB.numFactura}" /> 
@@ -200,8 +203,48 @@
 
                             </p:fieldset>
 
-                        </p:dialog>
+                        </p:dialog>                       
+ 
+ /**********************https://www.youtube.com/watch?v=MR9HtUYzzpE******************************************************************************************/
+ <p:dialog id="dialImgProducto"
+           widgetVar="dialImgProducto" 
+           height="10%"
+           modal="true"
+           responsive="true"
+           showEffect="explode"
+           >
 
+     <p:fieldset legend="IMAGEN PRODUCTO" style="margin-bottom:20px" >
+
+         <h:form id="fmImg" enctype="multipart/form-data">
+             <p:growl id="msjEqSopor1" life="6000" severity="info, error, warn" autoUpdate="false" />  
+              <h:outputText value="Imagen del producto (Limite imagen 1MB)" />
+         <p:panelGrid columns="1" layout="grid" style="background-color: #AFAFAF">
+             <p:fileUpload 
+                 fileUploadListener="#{productosMB.handleFileUpload}" 
+                 mode="advanced" 
+                 dragDropSupport="false"
+                 uploadLabel="Cargar"
+                 cancelLabel="Cancelar"
+                 label="seleccionar"
+                 update="msjEqSopor1" 
+                 sizeLimit="1000000"
+                 fileLimitMessage="Por favor solo puede cargar un documento."
+                 invalidSizeMessage="El archivo no podra exceder a un Megabyte."
+                 invalidFileMessage="Solo puede cargar archivos de tipo pdf."
+                 fileLimit="3" 
+                 
+                 allowTypes="/(\.|\/)(gif|jpg|jpeg|png)$/" />
+         </p:panelGrid>
+             
+         </h:form>
+        
+     </p:fieldset>
+
+
+ </p:dialog>
+ 
+ 
                     </h:form>
 
                 </p:fieldset>
