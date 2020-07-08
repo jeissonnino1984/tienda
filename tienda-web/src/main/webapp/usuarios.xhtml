@@ -73,7 +73,7 @@
                                     <f:facet name="input"><p:inputText value="#{car.telefono}" style="width:100%" label="Year"/></f:facet>
                                 </p:cellEditor>
                             </p:column>
-                            
+
                             <p:column headerText="correo">
                                 <p:cellEditor>
                                     <f:facet name="output"><h:outputText value="#{car.correo}" /></f:facet>
@@ -110,22 +110,22 @@
                                     </p:selectOneMenu>
 
                                     <h:outputText value="Nombres" />
-                                    <p:inputText value="#{usuarioMB.nombres}" required="true" requiredMessage="debe escribir un nombre" /> 
+                                    <p:inputText value="#{usuarioMB.nombres}" required="true" requiredMessage="Debe escribir un nombre" /> 
 
 
                                     <h:outputText value="Apellidos" />
-                                    <p:inputText value="#{usuarioMB.apellidos}" required="true" requiredMessage="debe escribir un apellido" />
+                                    <p:inputText value="#{usuarioMB.apellidos}" required="true" requiredMessage="Debe escribir un apellido" />
 
                                     <h:outputText value="correo" />
-                                    <p:inputText value="#{usuarioMB.correo}" required="true" requiredMessage="debe escribir un correo"/> 
+                                    <p:inputText value="#{usuarioMB.correo}" required="true" requiredMessage="Debe escribir un correo"/> 
 
                                     <p:outputLabel  value="Departamento: " />
                                     <p:selectOneMenu id="departametos" 
                                                      value="#{usuarioMB.departamentoSeleccionado}" 
                                                      required="true" 
-                                                     requiredMessage="debe selecionar una Departametno">
+                                                     requiredMessage="Debe selecionar una Departametno">
                                         <f:selectItem itemLabel="Disponibles:" itemValue="#{null}"/>
-                                        
+
                                         <f:selectItems value="#{usuarioMB.listLugaresDEP}" 
                                                        var="pro1" 
                                                        itemLabel="#{pro1.descripcion}" 
@@ -139,7 +139,7 @@
                                                      value="#{usuarioMB.ciudadId}" 
                                                      disabled="#{usuarioMB.listCiudades == null}" 
                                                      required="true" 
-                                                     requiredMessage="debe selecionar una Departametno">
+                                                     requiredMessage="Debe selecionar una Ciudad">
                                         <f:selectItem itemLabel="Disponibles:" itemValue="#{null}"/>
                                         <f:selectItems value="#{usuarioMB.listCiudades}"
                                                        var="ciudad" 
@@ -147,7 +147,18 @@
                                                        itemValue="#{ciudad.codigo}" />
                                     </p:selectOneMenu>
 
-
+                                     <p:outputLabel  value="Punto Venta; " />
+                                     <p:selectOneMenu id="puntoVenta" 
+                                                      value="#{usuarioMB.puntoTrabajoId}" 
+                                                      disabled="#{usuarioMB.listPuntoVenta == null}" 
+                                                     required="true" 
+                                                     requiredMessage="Debe selecionar una Punto de Venta">
+                                        <f:selectItem itemLabel="Disponibles:" itemValue="#{null}"/>
+                                        <f:selectItems value="#{usuarioMB.listPuntoVenta}"
+                                                       var="puntoVenta" 
+                                                       itemLabel="#{puntoVenta.nombrePunto}" 
+                                                       itemValue="#{puntoVenta.id}" />
+                                    </p:selectOneMenu>
 
                                     <h:outputText value="direccion" />
                                     <p:inputText value="#{usuarioMB.direccion}" />
@@ -169,8 +180,8 @@
                                         update="msjEqSopor"
                                         >
                                     </p:commandButton> 
-                                    
-                                   
+
+
 
                                 </p:panelGrid>
 

@@ -103,6 +103,7 @@ public class UsuarioMB implements Serializable{
         usuarios.setTelefono(telefono);
         usuarios.setDireccion(direccion);
         usuarios.setCiudadResidFk(lugaresEJB.find(ciudadId));
+        
         usuarioEJB.create(usuarios);
         /**********asigno rol por defecto cliente*/
         usuarioXRolEJB.insertXIdRolxIdUsuario(setiarFecha(new Date()), usuarios.getId(), 1);
@@ -118,8 +119,8 @@ public class UsuarioMB implements Serializable{
     
     
      public void crearUsuario() {
-        
-         
+ 
+         try {
         usuarios = new Usuarios();
         usuarios.setNombre(nombres);
         usuarios.setApellidos(apellidos);
@@ -128,9 +129,16 @@ public class UsuarioMB implements Serializable{
         usuarios.setTelefono(telefono);
         usuarios.setDireccion(direccion);
         usuarios.setCiudadResidFk(lugaresEJB.find(ciudadId));
+        usuarios.setPuntoTrabjandoFk(puntoVentaEJB.find(puntoTrabajoId));
+        usuarios.setJefePuntoVenta(jefePunto);
         usuarioEJB.create(usuarios);
-        System.out.println("se creo");
-
+        Mensajes.mensajeINFO("Se crea usuario");
+  
+         } catch (Exception e) {
+             Mensajes.mensajeERROR("error" + e);
+         }
+         
+       
     }
 
     public void editarUsuario(Usuarios usuarios) {
