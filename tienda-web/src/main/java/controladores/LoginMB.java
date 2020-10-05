@@ -30,7 +30,6 @@ public class LoginMB implements Serializable{
     }
     
     public String validarDatos() throws IOException{
-    
     List<Usuarios> listuser = usuariosEJB.buscarUsuario(usuario, contrasena);
     if(listuser.size() > 0 ){
     System.out.println("usuario encontrado" + listuser);

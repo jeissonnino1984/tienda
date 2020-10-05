@@ -20,7 +20,7 @@ import javax.faces.view.ViewScoped;
 @ViewScoped
 public class PuntosVentaMB implements Serializable{
 
-     @EJB
+    @EJB
     PuntoVentaEJB puntoVentaEJB;
     @EJB
     UsuariosEJB usuariosEJB;

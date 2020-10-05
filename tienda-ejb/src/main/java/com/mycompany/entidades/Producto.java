@@ -55,19 +55,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Producto.findByObservacion", query = "SELECT p FROM Producto p WHERE p.observacion = :observacion")})
 public class Producto implements Serializable {
 
-    @Column(name = "VALOR_UNITARIO")
-    private Integer valorUnitario;
-    @Column(name = "UNIDADES_DISPONIBLES")
-    private Integer unidadesDisponibles;
-    @Column(name = "VALOR_COMPRADO")
-    private Integer valorComprado;
-    @Column(name = "VALOR_GANACIA")
-    private Integer valorGanacia;
-    @Column(name = "NUM_FACTURA_PROVEEDOR")
-    private Integer numFacturaProveedor;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productoId")
-    private List<Factura> facturaList;
-
+   
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -90,13 +78,22 @@ public class Producto implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaVence;
     @Column(name = "USER_CREA")
-    private BigInteger userCrea;
+    private Integer userCrea;
     @Column(name = "USER_EDITA")
-    private BigInteger userEdita;
+    private Integer userEdita;
     @Size(max = 4000)
     @Column(name = "OBSERVACION")
     private String observacion;
-    
+     @Column(name = "VALOR_UNITARIO")
+    private Integer valorUnitario;
+    @Column(name = "UNIDADES_DISPONIBLES")
+    private Integer unidadesDisponibles;
+    @Column(name = "VALOR_COMPRADO")
+    private Integer valorComprado;
+    @Column(name = "VALOR_GANACIA")
+    private Integer valorGanacia;
+    @Column(name = "NUM_FACTURA_PROVEEDOR")
+    private Integer numFacturaProveedor;
     @JoinColumn(name = "PROVEEDOR_ID", referencedColumnName = "ID")
     @ManyToOne
     private Proveedor proveedorId;
@@ -106,12 +103,16 @@ public class Producto implements Serializable {
     @JoinColumn(name = "TIPO_PRODUCTO_ID", referencedColumnName = "ID")
     @ManyToOne
     private TipoProducto tipoProductoId;
+    @OneToMany(mappedBy = "productoFk")
+    private List<Imagenes> imagenesList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productoId")
+    private List<Factura> facturaList;
 
+    
     public Producto() {
     }
 
-    
-
+  
     public String getNombre() {
         return nombre;
     }
@@ -120,7 +121,6 @@ public class Producto implements Serializable {
         this.nombre = nombre;
     }
 
-   
 
     public Integer getUnidadesDisponibles() {
         return unidadesDisponibles;
@@ -155,19 +155,19 @@ public class Producto implements Serializable {
         this.fechaVence = fechaVence;
     }
 
-    public BigInteger getUserCrea() {
+    public Integer getUserCrea() {
         return userCrea;
     }
 
-    public void setUserCrea(BigInteger userCrea) {
+    public void setUserCrea(Integer userCrea) {
         this.userCrea = userCrea;
     }
 
-    public BigInteger getUserEdita() {
+    public Integer getUserEdita() {
         return userEdita;
     }
 
-    public void setUserEdita(BigInteger userEdita) {
+    public void setUserEdita(Integer userEdita) {
         this.userEdita = userEdita;
     }
 
@@ -222,7 +222,6 @@ public class Producto implements Serializable {
     }
 
   
-
     public Proveedor getProveedorId() {
         return proveedorId;
     }
@@ -251,8 +250,7 @@ public class Producto implements Serializable {
         return serialVersionUID;
     }
     
-    
-
+ 
     @Override
     public int hashCode() {
         int hash = 0;
@@ -287,6 +285,16 @@ public class Producto implements Serializable {
 
     public void setFacturaList(List<Factura> facturaList) {
         this.facturaList = facturaList;
+    }
+
+    
+    @XmlTransient
+    public List<Imagenes> getImagenesList() {
+        return imagenesList;
+    }
+
+    public void setImagenesList(List<Imagenes> imagenesList) {
+        this.imagenesList = imagenesList;
     }
     
 }

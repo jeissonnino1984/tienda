@@ -63,9 +63,9 @@ public class Sku implements Serializable {
     @Column(name = "REFERENCIA")
     private String referencia;
     @Column(name = "USER_CREA")
-    private BigInteger userCrea;
+    private Integer userCrea;
     @Column(name = "USER_EDITA")
-    private BigInteger userEdita;
+    private Integer userEdita;
     @Column(name = "FECHA_CREA")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCrea;
@@ -98,22 +98,24 @@ public class Sku implements Serializable {
         this.referencia = referencia;
     }
 
-
-    public BigInteger getUserCrea() {
+    public Integer getUserCrea() {
         return userCrea;
     }
 
-    public void setUserCrea(BigInteger userCrea) {
+    public void setUserCrea(Integer userCrea) {
         this.userCrea = userCrea;
     }
 
-    public BigInteger getUserEdita() {
+    public Integer getUserEdita() {
         return userEdita;
     }
 
-    public void setUserEdita(BigInteger userEdita) {
+    public void setUserEdita(Integer userEdita) {
         this.userEdita = userEdita;
     }
+
+
+    
 
     public Date getFechaCrea() {
         return fechaCrea;
@@ -180,5 +182,7 @@ public class Sku implements Serializable {
     public void setEstado(Integer estado) {
         this.estado = estado;
     }
+
+   
     
 }

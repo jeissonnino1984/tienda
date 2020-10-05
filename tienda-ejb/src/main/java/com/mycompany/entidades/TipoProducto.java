@@ -6,6 +6,7 @@
 package com.mycompany.entidades;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -15,11 +16,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -35,6 +38,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "TipoProducto.findByEstado", query = "SELECT t FROM TipoProducto t WHERE t.estado = :estado")})
 public class TipoProducto implements Serializable {
 
+    @Column(name = "ESTADO")
+    private Integer estado;
+    @OneToMany(mappedBy = "tipoProductoId")
+    private List<Producto> productoList;
+
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -47,8 +55,6 @@ public class TipoProducto implements Serializable {
     @Size(max = 100)
     @Column(name = "TIPO")
     private String tipo;
-    @Column(name = "ESTADO")
-    private Integer estado;
 
     public TipoProducto() {
     }
@@ -71,16 +77,7 @@ public class TipoProducto implements Serializable {
         this.tipo = tipo;
     }
 
-    public Integer getEstado() {
-        return estado;
-    }
 
-    public void setEstado(Integer estado) {
-        this.estado = estado;
-    }
-
-    
-   
 
     @Override
     public int hashCode() {
@@ -105,6 +102,25 @@ public class TipoProducto implements Serializable {
     @Override
     public String toString() {
         return "com.mycompany.entidades.TipoProducto[ id=" + id + " ]";
+    }
+
+    public Integer getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Integer estado) {
+        this.estado = estado;
+    }
+
+    
+
+    @XmlTransient
+    public List<Producto> getProductoList() {
+        return productoList;
+    }
+
+    public void setProductoList(List<Producto> productoList) {
+        this.productoList = productoList;
     }
     
 }
