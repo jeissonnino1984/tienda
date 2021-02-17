@@ -148,12 +148,15 @@ public class ProductosMB implements Serializable{
     /***************************metodos cargar imagen************************/
     public void handleFileUpload(FileUploadEvent event) {
         
+       
         uploadedFile = event.getFile();
         String filename = uploadedFile.getFileName();
+        long tamaño =  uploadedFile.getSize();
+        
         long bytes = uploadedFile.getSize();
 
         try {
-            OutputStream out = new FileOutputStream(new File(rutaImagenesProducto + filename));
+            OutputStream out = new FileOutputStream(new File(rutaImagenesProducto + filename + "_" +tamaño));
             out.flush();
             out.close();
             Mensajes.mensajeINFO("Se crea el archivo " + filename + "  Peso " + bytes + "Kbps");
